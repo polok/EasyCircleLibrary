@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import pl.polak.circle.BorderCircleProgressBar;
 import pl.polak.circle.CircleProgressBar;
 
 public class MainActivity extends ActionBarActivity {
@@ -49,6 +50,7 @@ public class MainActivity extends ActionBarActivity {
     public static class PlaceholderFragment extends Fragment {
 
         private CircleProgressBar circleProgressBar;
+        private BorderCircleProgressBar borderCircleProgressBar;
 
         public PlaceholderFragment() {
         }
@@ -57,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             circleProgressBar = (CircleProgressBar) rootView.findViewById(R.id.circle_progress_bar);
+            borderCircleProgressBar = (BorderCircleProgressBar) rootView.findViewById(R.id.border_circle_progress_bar);
             return rootView;
         }
 
@@ -81,6 +84,7 @@ public class MainActivity extends ActionBarActivity {
                         percent = 0;
                     }
                     circleProgressBar.changePercentage(percent);
+                    borderCircleProgressBar.changePercentage(percent);
                 }
             }
         }

@@ -2,9 +2,20 @@
 <resources>
 
     <declare-styleable name="CircleProgressBarWidget">
+
+        <!-- Circle progress bar -->
         <attr name="circleColor" format="color" />
         <attr name="circleStrokeWidth" format="float" />
         <attr name="circleStartAngle" format="float" />
+
+        <!-- Circle outer -->
+        <attr name="outerCircleColor" format="color" />
+        <attr name="outerCircleStrokeWidth" format="float" />
+
+        <!-- Circle inner -->
+        <attr name="innerCircleColor" format="color" />
+        <attr name="innerCircleStrokeWidth" format="float" />
+
     </declare-styleable>
 
 </resources>

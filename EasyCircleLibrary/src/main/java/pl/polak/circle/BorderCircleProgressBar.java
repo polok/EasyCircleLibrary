@@ -12,29 +12,45 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class CircleProgressBar extends View {
+public class BorderCircleProgressBar extends View {
 
     private static Handler uiHandler = new Handler();
 
     private float circleCenterPointX;
     private float circleCenterPointY;
     private float circleRadius;
+
+    private float innerCircleStrokeWidth;
+    private int innerCircleColor;
+
+    private float outerCircleStrokeWidth;
+    private int outerCircleColor;
+
     private float circleStrokeWidth;
-    private float circleStartAngle;
     private int circleColor;
+    private float circleStartAngle;
     private int circlePercent;
 
-    public CircleProgressBar(Context context) {
+
+    private float outerCircleRadius;
+    private float innerCircleRadius;
+
+    public BorderCircleProgressBar(Context context) {
         this(context, null);
     }
 
-    public CircleProgressBar(Context context, AttributeSet attrs) {
+    public BorderCircleProgressBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CircleProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BorderCircleProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         loadViewAttribiutes(context, attrs);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
     }
 
     private void loadViewAttribiutes(Context context, AttributeSet attrs) {
@@ -42,6 +58,12 @@ public class CircleProgressBar extends View {
         circleStartAngle = typedArray.getFloat(R.styleable.CircleProgressBarWidget_circleStartAngle, 270);
         circleStrokeWidth = typedArray.getFloat(R.styleable.CircleProgressBarWidget_circleStrokeWidth, 20);
         circleColor = typedArray.getColor(R.styleable.CircleProgressBarWidget_circleColor, Color.DKGRAY);
+
+        innerCircleStrokeWidth = typedArray.getFloat(R.styleable.CircleProgressBarWidget_innerCircleStrokeWidth, 2);
+        innerCircleColor = typedArray.getColor(R.styleable.CircleProgressBarWidget_innerCircleColor, Color.BLACK);
+
+        outerCircleStrokeWidth = typedArray.getFloat(R.styleable.CircleProgressBarWidget_outerCircleStrokeWidth, 2);
+        outerCircleColor = typedArray.getColor(R.styleable.CircleProgressBarWidget_outerCircleColor, Color.BLACK);
     }
 
     @Override
@@ -49,7 +71,12 @@ public class CircleProgressBar extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         circleCenterPointX = w / 2;
         circleCenterPointY = h / 2;
-        circleRadius = (w / 3) - circleStrokeWidth /2;
+
+        circleRadius = (w / 3) - circleStrokeWidth / 2;
+
+        innerCircleRadius = (w / 3) - (circleStrokeWidth / 2) * 2.5f ;//+ (innerCircleStrokeWidth);
+        outerCircleRadius = w / 3 + circleStrokeWidth / 3;
+
     }
 
     @Override
@@ -57,7 +84,28 @@ public class CircleProgressBar extends View {
         super.onDraw(canvas);
         Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
+
+        drawInnerCircle(paint, canvas);
+        drawOuterCircle(paint, canvas);
         drawCircleProgress(paint, canvas);
+    }
+
+    private void drawInnerCircle(Paint paint, Canvas canvas) {
+        float delta = circleCenterPointX - innerCircleRadius;
+        float circleSize = (circleCenterPointX - (delta / 2f)) * 2f;
+        RectF circleBox = new RectF(delta, delta, circleSize, circleSize);
+        paint.setStrokeWidth(innerCircleStrokeWidth);
+        paint.setColor(innerCircleColor);
+        canvas.drawArc(circleBox, circleStartAngle, 360, false, paint);
+    }
+
+    private void drawOuterCircle(Paint paint, Canvas canvas) {
+        float delta = circleCenterPointX - outerCircleRadius;
+        float circleSize = (circleCenterPointX - (delta / 2f)) * 2f;
+        RectF circleBox = new RectF(delta, delta, circleSize, circleSize);
+        paint.setStrokeWidth(outerCircleStrokeWidth);
+        paint.setColor(outerCircleColor);
+        canvas.drawArc(circleBox, circleStartAngle, 360, false, paint);
     }
 
     private void drawCircleProgress(Paint paint, Canvas canvas){
@@ -80,5 +128,4 @@ public class CircleProgressBar extends View {
             }
         });
     }
-
 }
