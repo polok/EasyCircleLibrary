@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EasyCircleLibrary.iml" filepath="$PROJECT_DIR$/EasyCircleLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/EasyCircleLibrary/EasyCircleLibrary-EasyCircleLibrary.iml" filepath="$PROJECT_DIR$/EasyCircleLibrary/EasyCircleLibrary-EasyCircleLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EasyCircleSample/EasyCircleSample.iml" filepath="$PROJECT_DIR$/EasyCircleSample/EasyCircleSample.iml" />
     </modules>
   </component>
 </project>
