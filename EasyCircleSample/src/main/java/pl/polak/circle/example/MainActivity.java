@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import pl.polak.circle.CircleProgressBar;
+
 public class MainActivity extends ActionBarActivity {
 
     @Override
@@ -28,17 +30,12 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
@@ -51,15 +48,41 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private CircleProgressBar circleProgressBar;
+
         public PlaceholderFragment() {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            circleProgressBar = (CircleProgressBar) rootView.findViewById(R.id.circle_progress_bar);
             return rootView;
         }
-    }
 
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            new Thread(new CircleProgressBarTask()).start();
+        }
+
+        class CircleProgressBarTask implements Runnable {
+            @Override
+            public void run() {
+                int percent = 0;
+                while (true) {
+                    try {
+                        Thread.sleep(150);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    percent += 5;
+                    if (percent > 100) {
+                        percent = 0;
+                    }
+                    circleProgressBar.changePercentage(percent);
+                }
+            }
+        }
+    }
 }
