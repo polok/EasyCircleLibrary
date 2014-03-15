@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EasyCircleLibrary.iml" filepath="$PROJECT_DIR$/EasyCircleLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EasyCircleLibrary/EasyCircleLibrary-EasyCircleLibrary.iml" filepath="$PROJECT_DIR$/EasyCircleLibrary/EasyCircleLibrary-EasyCircleLibrary.iml" />
+    </modules>
+  </component>
+</project>
+
